@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="site.metacoding.red.domain.boards.BoardsDao">
+
+	<insert id="insert">
+		INSERT INTO boards(id, title, content, usersId,
+		createdAt)
+		VALUES(boards_seq.nextval, #{title}, #{content}, #{usersId},
+		sysdate)
+	</insert>
+
+	<select id="findById"
+		resultType="site.metacoding.red.domain.boards.dto.BoardDto">
+		SELECT title, content FROM boards WHERE id = #{id}
+	</select>
+
+	<select id="findAll"
+		resultType="site.metacoding.red.domain.boards.dto.BoardList">
+		SELECT b.id, b.title, (
+		SELECT u.username
+		FROM users u
+		WHERE
+		b.usersId = u.id) usersName
+		FROM boards b
+	</select>
+	
+	<select id="findAllById"
+		resultType="site.metacoding.red.domain.boards.dto.BoardList">
+		SELECT b.id, b.title, (
+		SELECT u.username
+		FROM users u
+		WHERE
+		b.usersId = u.id) usersName
+		FROM boards b
+		WHERE b.usersid = #{id}
+	</select>
+
+	<update id="update">
+	UPDATE boards SET title = #{title}, content = #{content}
+	WHERE id = #{id}
+
+	</update>
+	
+	<select id="showBoard"
+	resultType="site.metacoding.red.domain.boards.dto.BoardDto">
+	SELECT title, content
+	FROM boards
+	WHERE id = #{id}
+	</select>
+
+	<delete id="delete">
+	DELETE FROM boards WHERE id = #{id}
+	</delete>
+
+</mapper>
