@@ -1,8 +1,11 @@
 package site.metacoding.red.web;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,6 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import lombok.RequiredArgsConstructor;
 import site.metacoding.red.domain.boards.Boards;
 import site.metacoding.red.domain.boards.BoardsDao;
+import site.metacoding.red.domain.boards.mapper.MainView;
+import site.metacoding.red.domain.boards.mapper.ShowDetail;
 import site.metacoding.red.domain.users.Users;
 import site.metacoding.red.web.dto.request.boards.WriteDto;
 
@@ -23,7 +28,10 @@ public class BoardsController {
 	// @PostMapping("/boards/{id}/update")
 
 	@GetMapping({ "/", "/boards", "boards/main" })
-	public String getBoardList() {
+	public String getBoardList(Model model) {
+		List<MainView> boardsList = boardsDao.findAll();
+		model.addAttribute("boardsList", boardsList);
+		
 		return "boards/main";
 	}
 
@@ -44,7 +52,9 @@ public class BoardsController {
 	}
 
 	@GetMapping("/boards/{id}")
-	public String getBoardList(@PathVariable Integer id) {
+	public String getBoardList(@PathVariable Integer id, Model model) {
+		ShowDetail detail = boardsDao.findById(id);
+		model.addAttribute("detail", detail);
 		return "boards/detail";
 	}
 
