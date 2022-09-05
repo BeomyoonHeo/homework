@@ -10,6 +10,6 @@ public class PagingDto {
 	private Integer totalCount;
 	private Integer totalPage;// 23 / 한페이지당 개수(10)
 	private Integer currentPage;
-	private boolean isLast;
-	private boolean isFirst;
+	private Boolean isLast;
+	private Boolean isFirst;
 }

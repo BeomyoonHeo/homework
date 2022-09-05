@@ -31,13 +31,17 @@ public class BoardsController {
 	
 	
 	//http://localhost:8000/?page=0
-	@GetMapping({ "/", "/boards", "boards/main" })
+	@GetMapping({ "/", "/boards", "boards/main",})
 	public String getBoardList(Model model, Integer page) {// 0->0, 1->10, 2->20
 		if(page == null) page = 0; //offset은 서버쪽에서 처리해야된다 - 클라이언트가 처리하면 불편하다.
 		int startNum = page * 10;
 		List<MainDto> boardsList = boardsDao.findAll(startNum);
-		model.addAttribute("boardsList", boardsList);
+		PagingDto pagingDto = boardsDao.findPage(page);
+		System.out.println(pagingDto.getIsFirst()); 
+		System.out.println(pagingDto.getIsLast()); 
 		
+		model.addAttribute("boardsList", boardsList);
+		model.addAttribute("pagingDto", pagingDto);
 		return "boards/main";
 	}
 
@@ -53,7 +57,6 @@ public class BoardsController {
 		boardsDao.insert(writeDto.toEntity(principal.getId()));
 		//조건 : dto를 entity로 변환해서 인수로 담아준다.
 		//조건 : entity에는 세션의 principal에 getId가 필요하다.
-		
 		return "redirect:/";
 	}
 
@@ -71,7 +74,6 @@ public class BoardsController {
 		if (principal == null) {
 			return "redirect:/loginForm";
 		}
-		
 		return "boards/writeForm";
 	}
 }
