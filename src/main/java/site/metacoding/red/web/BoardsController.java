@@ -17,6 +17,7 @@ import site.metacoding.red.domain.boards.mapper.ShowDetail;
 import site.metacoding.red.domain.users.Users;
 import site.metacoding.red.web.dto.request.boards.WriteDto;
 import site.metacoding.red.web.dto.response.boards.MainDto;
+import site.metacoding.red.web.dto.response.boards.PagingDto;
 
 @RequiredArgsConstructor
 @Controller
@@ -27,9 +28,14 @@ public class BoardsController {
 	// @PostMapping("/boards/{id}/delete")
 	// @PostMapping("/boards/{id}/update")
 
+	
+	
+	//http://localhost:8000/?page=0
 	@GetMapping({ "/", "/boards", "boards/main" })
-	public String getBoardList(Model model) {
-		List<MainDto> boardsList = boardsDao.findAll();
+	public String getBoardList(Model model, Integer page) {// 0->0, 1->10, 2->20
+		if(page == null) page = 0; //offset은 서버쪽에서 처리해야된다 - 클라이언트가 처리하면 불편하다.
+		int startNum = page * 10;
+		List<MainDto> boardsList = boardsDao.findAll(startNum);
 		model.addAttribute("boardsList", boardsList);
 		
 		return "boards/main";
