@@ -23,7 +23,7 @@
 		</tbody>
 	</table>
 <div class="container mt-3">
-	<h2>${param.page}</h2>
+	<h2>${param.page + 0}</h2>
   <ul class="pagination">
   <c:choose>
   <c:when test="${param.page == 0 || param.page == null}">
