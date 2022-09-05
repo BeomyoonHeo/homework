@@ -26,7 +26,7 @@
 	<h2>${pagingDto.currentPage + 1}</h2>
   <ul class="pagination">
   <c:choose>
-  <c:when test="${pagingDto.first}">
+  <c:when test="${pagingDto.isFirst}">
   <li class="page-item disabled"><a class="page-link" href="/?page=${pagingDto.currentPage - 1}">Previous</a></li>
   </c:when>
   <c:otherwise>
@@ -37,7 +37,7 @@
     <li class="page-item"><a class="page-link" href="/?page=${item}">${item + 1}</a></li>
   </c:forEach>
     <c:choose>
-    <c:when test="${pagingDto.first}">
+    <c:when test="${pagingDto.isFirst}">
     <li class="page-item"><a class="page-link" href="/?page=${pagingDto.currentPage + 1}">Next</a></li>
     </c:when>
     <c:otherwise>
