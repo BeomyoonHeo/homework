@@ -37,9 +37,6 @@ public class BoardsController {
 		int startNum = page * 10;
 		List<MainDto> boardsList = boardsDao.findAll(startNum);
 		PagingDto pagingDto = boardsDao.findPage(page);
-		System.out.println(pagingDto.getIsFirst()); 
-		System.out.println(pagingDto.getIsLast()); 
-		
 		model.addAttribute("boardsList", boardsList);
 		model.addAttribute("pagingDto", pagingDto);
 		return "boards/main";

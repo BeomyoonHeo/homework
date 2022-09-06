@@ -27,8 +27,8 @@
 		select totalCount, 
 		ceil(totalCount/10) totalPage, 
 		currentPage, 
-		decode(currentPage, ceil(totalCount/10)-1, 1, 0) last,
-		decode(currentPage, 0, 1, 0) first
+		decode(currentPage, ceil(totalCount/10)-1, 1, 0) isLast,
+		decode(currentPage, 0, 1, 0) isFirst
 		from
 		(select count(*) totalCount, #{page} currentPage from boards)
 	</select>

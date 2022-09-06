@@ -37,11 +37,11 @@
     <li class="page-item"><a class="page-link" href="/?page=${item}">${item + 1}</a></li>
   </c:forEach>
     <c:choose>
-    <c:when test="${pagingDto.isFirst}">
-    <li class="page-item"><a class="page-link" href="/?page=${pagingDto.currentPage + 1}">Next</a></li>
+    <c:when test="${pagingDto.isLast}">
+    <li class="page-item disabled"><a class="page-link" href="/?page=${pagingDto.currentPage + 1}">Next</a></li>
     </c:when>
     <c:otherwise>
-    <li class="page-item disabled"><a class="page-link" href="/?page=${pagingDto.currentPage + 1}">Next</a></li>
+    <li class="page-item"><a class="page-link" href="/?page=${pagingDto.currentPage + 1}">Next</a></li>
     </c:otherwise>
     </c:choose>
     
