@@ -23,26 +23,12 @@
 		</tbody>
 	</table>
 <div class="container mt-3">
-	<h2>${param.page}</h2>
-  <ul class="pagination">
-  <c:choose>
-  <c:when test="${param.page == 0 || param.page == null}">
-  <li class="page-item disabled"><a class="page-link" href="/?page=2">Previous</a></li>
-  </c:when>
-  <c:otherwise>
-  <li class="page-item"><a class="page-link" href="/?page=${param.page - 1}">Previous</a></li>
-  </c:otherwise>
-  </c:choose>
-    <li class="page-item"><a class="page-link" href="#">1</a></li>
-    <li class="page-item"><a class="page-link" href="#">2</a></li>
-    <li class="page-item"><a class="page-link" href="#">3</a></li>
-    <c:choose>
-    <c:when test="">
-    <li class="page-item"><a class="page-link" href="/?page=${param.page + 1}">Next</a></li>
-    </c:when>
-    </c:choose>
-    
-  </ul>
+	<h3>totalCount: ${pagingDto.totalCount}</h3>
+	<h3>totalPage: ${pagingDto.totalPage}</h3>
+	<h3>currentPage: ${pagingDto.currentPage}</h3>
+	<h3>isLast: ${pagingDto.isLast}</h3>
+	<h3>isFirst: ${pagingDto.isFirst}</h3>
+	
 </div>
 </div>
 

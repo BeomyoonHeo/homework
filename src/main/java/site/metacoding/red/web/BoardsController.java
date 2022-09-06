@@ -36,7 +36,9 @@ public class BoardsController {
 		if(page == null) page = 0; //offset은 서버쪽에서 처리해야된다 - 클라이언트가 처리하면 불편하다.
 		int startNum = page * 10;
 		List<MainDto> boardsList = boardsDao.findAll(startNum);
+		PagingDto pagingDto = boardsDao.findPage(page);
 		model.addAttribute("boardsList", boardsList);
+		model.addAttribute("pagingDto", pagingDto);
 		
 		return "boards/main";
 	}
