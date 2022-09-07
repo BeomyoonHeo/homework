@@ -8,12 +8,13 @@
 	<insert id="insert">
 		INSERT INTO boards(id, title, content, usersId,
 		createdAt)
-		VALUES(boards_seq.nextval, #{title}, #{content}, #{usersId}, sysdate)
+		VALUES(boards_seq.nextval, #{title}, #{content}, #{usersId},
+		sysdate)
 	</insert>
 
 	<select id="findById"
-		resultType="site.metacoding.red.domain.boards.mapper.ShowDetail">
-		SELECT title, content
+		resultType="site.metacoding.red.domain.boards.Boards">
+		SELECT id, title, content, usersId
 		FROM boards
 		WHERE id = #{id}
 	</select>
@@ -24,18 +25,21 @@
 		FROM boards b
 		INNER JOIN users u
 		ON b.usersid = u.id
-		ORDER BY b.id DESC
-		OFFSET #{startNum} ROWS fetch NEXT 10 ROWS ONLY
+		ORDER BY b.id
+		DESC
+		OFFSET #{startNum} ROWS fetch NEXT 3 ROWS ONLY
 	</select>
 
-	<select id="findPage" resultType="site.metacoding.red.web.dto.response.boards.PagingDto">
+	<select id="paging"
+		resultType="site.metacoding.red.web.dto.response.boards.PagingDto">
 		SELECT totalCount,
-		ceil(totalCount/10) totalPage,
+		ceil(totalCount/3) totalPage,
 		currentPage,
-		decode(currentPage, ceil(totalCount/10)-1, 1, 0) isLast,
-		decode(currentPage, 0, 1, 0) isFirst
+		decode(currentPage, ceil(totalCount/3)-1, 1, 0) islast,
+		decode(currentPage, 0, 1, 0) isfirst
 		FROM
-		(select count(*) totalCount, #{page} currentPage from boards)
+		(select count(*) totalCount,
+		#{page} currentPage from boards)
 	</select>
 
 	<update id="update">
@@ -43,6 +47,7 @@
 	</update>
 
 	<delete id="delete">
+	DELETE FROM boards WHERE id = #{id}
 
 	</delete>
 
