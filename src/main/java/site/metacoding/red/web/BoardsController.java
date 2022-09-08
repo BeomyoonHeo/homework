@@ -91,20 +91,7 @@ public class BoardsController {
 		int startNum = page * 3;
 		List<MainDto> boardsList = boardsDao.findAll(startNum);
 		PagingDto pagingDto = boardsDao.paging(page);
-
-		final int blockCount = 5;
-
-		int currentBlock = page / blockCount;
-		int startPageNum = 1 + blockCount * currentBlock;
-		int lastPageNum = 5 + blockCount * currentBlock;
-
-		if (pagingDto.getTotalPage() <= lastPageNum)
-			lastPageNum = pagingDto.getTotalPage();
-		
-		pagingDto.setBlockCount(blockCount);
-		pagingDto.setCurrentBlock(currentBlock);
-		pagingDto.setStartPageNum(startPageNum);
-		pagingDto.setLastPageNum(lastPageNum);
+		pagingDto.makeBlockInfo();
 		model.addAttribute("boardsList", boardsList);
 		model.addAttribute("pagingDto", pagingDto);
 		return "boards/main";
